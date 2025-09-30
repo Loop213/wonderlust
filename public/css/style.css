@@ -1,0 +1,71 @@
+body{
+    background-color:navy;
+}
+
+.card{
+    border: none !important ;
+    margin-bottom: 2 rem;
+    
+}
+
+
+.footer {
+  background: #111;
+  color: #ddd;
+  padding: 20px 10px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.f-info {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+
+.f-info-social a {
+  margin: 0 8px;
+  color: #ddd;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.f-info-social a:hover {
+  color: #1db954; /* Spotify green style */
+}
+
+.f-info-text {
+  font-size: 0.9rem;
+  flex: 1 1 auto;
+}
+
+.f-info-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #bbb;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+  color: #1db954;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .f-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  .f-info-links {
+    margin-top: 10px;
+  }
+}
+
+/* head of mapping  */
+
+#map { position: absolute; top: 0; bottom: 400px; width: 70vh; }

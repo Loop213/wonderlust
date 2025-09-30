@@ -1,0 +1,60 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-3">
+  <div class="col-md-6 offset-md-3">
+    <div class="card shadow-sm">
+      <div class="card-header bg-light">
+        <h3 class="mb-0 text-center">Sign Up for WanderLust</h3>
+      </div>
+      <div class="card-body">
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+          
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input 
+              type="text" 
+              name="username" 
+              id="username" 
+              class="form-control"
+              placeholder="Choose a unique username"
+              required
+            />
+            <div class="invalid-feedback">A username is required.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input 
+              type="email" 
+              name="email" 
+              id="email" 
+              class="form-control"
+              placeholder="Enter your email"
+              required
+            />
+            <div class="invalid-feedback">A valid email is required.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input 
+              type="password" 
+              name="password" 
+              id="password" 
+              class="form-control"
+              placeholder="Create a strong password"
+              required
+            />
+            <div class="invalid-feedback">A password is required.</div>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">Create Account</button>
+        </form>
+        
+        <div class="text-center mt-3">
+          <p>Already have an account? <a href="/login">Log In</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
