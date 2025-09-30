@@ -126,6 +126,11 @@ app.use((err, req, res, next) => {
   const { statusCode = 500, message = "Something went wrong" } = err;
   res.status(statusCode).send(message);
 });
+// Home page route
+app.get("/", (req, res) => {
+  res.render("home"); // must have views/home.ejs
+});
+
 
 app.listen(PORT, () => {
   console.log("Server is listening on port 8080");
