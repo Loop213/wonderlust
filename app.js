@@ -131,7 +131,4 @@ app.listen(PORT, () => {
   console.log("Server is listening on port 8080");
 });
 
-app.get("/", (req, res) => {
-  res.render("home"); // views/home.ejs must exist
-});
 
