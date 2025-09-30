@@ -127,10 +127,14 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send(message);
 });
 // Home page route
-app.get("/", (req, res) => {
+app.get("/Listings", (req, res) => {
   res.render("home"); // must have views/home.ejs
 });
 
+// Catch-all route for undefined URLs
+app.all("*", (req, res, next) => {
+  res.status(404).render("random_url"); // render 404.ejs
+});
 
 app.listen(PORT, () => {
   console.log("Server is listening on port 8080");
