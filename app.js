@@ -61,9 +61,17 @@ const sessionOptions = {
 
 
 
-mongoose.connect(DB_URL)
-  .then(() => console.log("Connected to DB"))
-  .catch(err => console.log(err));
+mongoose.connect(DB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,   // force SSL
+  tls: true,   // TLS handshake
+})
+.then(() => console.log("✅ Connected to DB"))
+.catch(err => {
+  console.error("❌ MongoDB connection error:", err);
+});
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
