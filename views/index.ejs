@@ -1,51 +1,153 @@
 <% layout("/layouts/boilerplate") %>
-<%=success %>
+
+<style>
+  /* Filter Styles */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* Center the filter icons */
+    gap: 2rem; /* Spacing between icons */
+    padding: 1rem 0;
+  }
+
+  .filter {
+    text-align: center;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    transform: scale(1.05); /* Add a pop effect on hover */
+    text-decoration: underline;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .filter i {
+    font-size: 1.4rem;
+  }
+  
+  /* Create New Listing Button */
+  .add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+  }
+
+  /* Listing Card Styles */
+  .listing-link {
+    text-decoration: none;
+  }
+
+  .listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    border-radius: 1rem !important;
+    overflow: hidden; /* Ensures the image corners are also rounded */
+    position: relative;
+    transition: all 0.25s ease;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-img-top {
+    border-radius: 1rem !important;
+    width: 100%;
+    height: 20rem; /* Fixed height for a uniform look */
+    object-fit: cover !important; /* Prevents image stretching */
+  }
+
+  /* Image Overlay Effect */
+  .card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s ease;
+  }
+
+  .listing-card:hover .card-img-overlay {
+    opacity: 0.15; /* Reveals a slight dark tint on hover */
+  }
+  
+  .card-body p {
+    margin: 0;
+  }
+</style>
+
 <body>
-  <!-- <h2>All Listings</h2>
-
-  <a href="/listings/new" class="btn btn-primary mb-3">Create New Listing</a> -->
-
-  <style>
-    .filters{
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .filter{
-      text-align: center;
-      margin-right: 2 rem;
-      margin-top: 2rem;
-      opacity :0.7;
-    }
-    .hover.filer{
-      opacity: 1;
-    }
-  </style>
+  
+  <% if (success && success.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+      <%= success %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
 
   <div class="filters">
-    <div class="flter">
-      <div><i class="fa-chisel fa-regular fa-house"></i></div>
-      <p>Home</p>
+    <div class="filter">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
     </div>
-     <div class="flter">
-      <div><i class="fa-solid fa-alarm-clock"></i></div>
-      <p>alarem</p>
+    <div class="filter">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Iconic Cities</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing Pools</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-tractor"></i></div>
+      <p>Farms</p>
+    </div>
+    <div class="filter">
+      <div><i class="fa-solid fa-snowflake"></i></div>
+      <p>Arctic</p>
     </div>
   </div>
 
   <div class="container">
-    <div class="row">
+    <a href="/listings/new" class="btn btn-primary add-btn mb-4">Create New Listing</a>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
       <% for (let listing of allListings) { %>
-        <div class="col-md-4 mb-3">
-          <div class="card h-100">
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <div class="card listing-card">
             <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>">
+            <div class="card-img-overlay"></div>
             <div class="card-body">
-              <h5 class="card-title"><%= listing.title %></h5>
-              <p class="card-text"><%= listing.description.substring(0, 100) %>...</p>
-              <p class="card-text"><strong>$<%= listing.price %></strong></p>
-              <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-outline-primary">View Details</a>
+              <p class="card-text">
+                <b><%= listing.title %></b> <br>
+                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+              </p>
             </div>
           </div>
-        </div>
+        </a>
       <% } %>
     </div>
   </div>
