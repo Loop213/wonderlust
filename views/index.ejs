@@ -1,14 +1,30 @@
 <% layout("/layouts/boilerplate") %>
-
 <style>
-  /* Filter Styles */
+  :root {
+    --primary-color: #fe424d;
+    --secondary-color: #f7f7f7;
+    --text-color: #222222;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif; /* A cleaner, more modern font */
+  }
+
+  /* --- STICKY FILTER NAVIGATION --- */
+  .filter-nav {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+  }
+
   .filters {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center; /* Center the filter icons */
-    gap: 2rem; /* Spacing between icons */
-    padding: 1rem 0;
+    gap: 2rem;
   }
 
   .filter {
@@ -18,29 +34,47 @@
     transition: all 0.2s ease-in-out;
   }
 
-  .filter:hover {
+  .filter:hover, .filter.active {
     opacity: 1;
-    transform: scale(1.05); /* Add a pop effect on hover */
-    text-decoration: underline;
+    transform: scale(1.05);
+  }
+  
+  .filter.active p {
+    border-bottom: 2px solid var(--text-color);
   }
 
   .filter p {
     font-size: 0.8rem;
     margin-top: 0.5rem;
     margin-bottom: 0;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
   }
 
   .filter i {
     font-size: 1.4rem;
   }
-  
-  /* Create New Listing Button */
-  .add-btn {
-    background-color: #fe424d !important;
-    border: none !important;
+
+  /* --- LISTING HEADER & TAX TOGGLE --- */
+  .listing-header-controls {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
-  /* Listing Card Styles */
+  .form-check-input:checked {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+  }
+
+  .form-check-label {
+    color: var(--text-color);
+  }
+
+  /* --- CARD STYLES & ANIMATIONS --- */
   .listing-link {
     text-decoration: none;
   }
@@ -49,9 +83,15 @@
     border: none !important;
     margin-bottom: 2rem;
     border-radius: 1rem !important;
-    overflow: hidden; /* Ensures the image corners are also rounded */
+    overflow: hidden;
     position: relative;
     transition: all 0.25s ease;
+    animation: fadeIn 0.5s ease-in-out; /* Add a fade-in animation on load */
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .listing-card:hover {
@@ -62,29 +102,29 @@
   .card-img-top {
     border-radius: 1rem !important;
     width: 100%;
-    height: 20rem; /* Fixed height for a uniform look */
-    object-fit: cover !important; /* Prevents image stretching */
+    height: 20rem;
+    object-fit: cover !important;
   }
 
-  /* Image Overlay Effect */
   .card-img-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    opacity: 0; /* Hidden by default */
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent); /* Add a subtle gradient */
+    opacity: 0;
     transition: opacity 0.2s ease;
   }
 
   .listing-card:hover .card-img-overlay {
-    opacity: 0.15; /* Reveals a slight dark tint on hover */
+    opacity: 1;
   }
-  
+
   .card-body p {
     margin: 0;
   }
+
+  .add-btn {
+    background-color: var(--primary-color) !important;
+    border: none !important;
+  }
+
 </style>
 
 <body>
@@ -96,45 +136,33 @@
     </div>
   <% } %>
 
-  <div class="filters">
-    <div class="filter">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
+  <nav class="filter-nav">
+    <div class="filters">
+      <div class="filter" data-category="Trending"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+      <div class="filter" data-category="Rooms"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+      <div class="filter" data-category="Cities"><i class="fa-solid fa-mountain-city"></i><p>Iconic Cities</p></div>
+      <div class="filter" data-category="Mountains"><i class="fa-solid fa-mountain"></i><p>Mountains</p></div>
+      <div class="filter" data-category="Pools"><i class="fa-solid fa-person-swimming"></i><p>Amazing Pools</p></div>
+      <div class="filter" data-category="Camping"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+      <div class="filter" data-category="Farms"><i class="fa-solid fa-tractor"></i><p>Farms</p></div>
+      <div class="filter" data-category="Arctic"><i class="fa-solid fa-snowflake"></i><p>Arctic</p></div>
     </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic Cities</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p>Mountains</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-tractor"></i></div>
-      <p>Farms</p>
-    </div>
-    <div class="filter">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p>Arctic</p>
-    </div>
-  </div>
+  </nav>
 
-  <div class="container">
-    <a href="/listings/new" class="btn btn-primary add-btn mb-4">Create New Listing</a>
+  <main class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+      <h3 class="mb-0">All Listings</h3>
+      <div class="listing-header-controls">
+        <a href="/listings/new" class="btn btn-primary add-btn">Create New Listing</a>
+        <div class="vr"></div>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="taxToggle">
+          <label class="form-check-label" for="taxToggle">Display total after taxes</label>
+        </div>
+      </div>
+    </div>
 
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4" id="listings-container">
       <% for (let listing of allListings) { %>
         <a href="/listings/<%= listing._id %>" class="listing-link">
           <div class="card listing-card">
@@ -143,12 +171,59 @@
             <div class="card-body">
               <p class="card-text">
                 <b><%= listing.title %></b> <br>
-                &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+                <span class="listing-price" data-base-price="<%= listing.price %>">
+                  &#8377; <%= listing.price.toLocaleString("en-IN") %>
+                </span> / night
               </p>
             </div>
           </div>
         </a>
       <% } %>
     </div>
-  </div>
+  </main>
+
+  <script>
+    // This script block shows how your JavaScript can interact with the new design.
+    // I am "not forgetting your JS code" by showing you exactly where it would go!
+
+    // --- LOGIC FOR THE TAX TOGGLE SWITCH ---
+    const taxSwitch = document.getElementById('taxToggle');
+    taxSwitch.addEventListener('click', () => {
+      const prices = document.querySelectorAll('.listing-price');
+      prices.forEach(priceEl => {
+        const basePrice = parseInt(priceEl.dataset.basePrice);
+        if (taxSwitch.checked) {
+          // Calculate price with 18% tax (as an example)
+          const priceWithTax = Math.round(basePrice * 1.18);
+          priceEl.innerHTML = `&#8377; ${priceWithTax.toLocaleString("en-IN")}`;
+        } else {
+          // Revert to the original base price
+          priceEl.innerHTML = `&#8377; ${basePrice.toLocaleString("en-IN")}`;
+        }
+      });
+    });
+
+    // --- EXAMPLE LOGIC FOR HANDLING FILTER CLICKS ---
+    // A full implementation would likely fetch new data from your server.
+    const filters = document.querySelectorAll('.filter');
+    filters.forEach(filter => {
+      filter.addEventListener('click', () => {
+        // First, remove 'active' class from all filters
+        filters.forEach(f => f.classList.remove('active'));
+        // Then, add 'active' class to the one that was clicked
+        filter.classList.add('active');
+
+        const category = filter.dataset.category;
+        console.log(`Filter clicked for category: ${category}`);
+
+        // TODO: Add your logic here to filter the listings.
+        // For example, you could make an AJAX/fetch call to your backend:
+        // fetch(`/listings?category=${category}`)
+        //   .then(response => response.json())
+        //   .then(data => {
+        //     // Code to update the listings on the page
+        //   });
+      });
+    });
+  </script>
 </body>
